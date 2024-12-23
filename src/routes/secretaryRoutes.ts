@@ -23,12 +23,9 @@ datetime duration
 make A middle ware comparing time that the doctor added with the availability table 
 sunday->6:12
 datetime 25-12-2024 6:30 tsz to timeStamp 1536845136
-
-Hellloooo Rahma 
-
 */
 //Secrtary supervised_by national Id => go find and return then make the reservation linking the patient 
 
-router.post("/makeReservation",validateMakeReservation,,makeReservation);
+router.post("/makeReservation",validateMakeReservation,makeReservation);
 
 export default router

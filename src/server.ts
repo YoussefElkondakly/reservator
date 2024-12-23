@@ -8,6 +8,7 @@ import Reservations from "./model/reservationsModel";
 import VisitHistories from "./model/visitHistoriesModel";
 import MedicalRecords from "./model/medicalRecordsModel";
 import Departments from "./model/departmentsModel";
+import Payments from "./model/paymentsModel";
 
 config()
 const dbpassword=process.env.DB_PASSWORD||''
@@ -21,7 +22,7 @@ sequelize.addModels([
   Patients,
   Availabilities,
   Reservations,
-  VisitHistories,MedicalRecords,Departments
+  VisitHistories,MedicalRecords,Departments,Payments
 ]);
 sequelize.sync(
 // {force: true}

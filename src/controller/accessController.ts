@@ -74,8 +74,8 @@ export const requirePasswordUpdate=catchAsync(async (req,res,next)=>{
   const user=await Users.findOne({where:{email:req.body.email}})
   if(!user) return next(new AppError("User not found",404,))
     if (user.role === "admin" || user.role === "secretary") return next();
-console.log(user.createdAt*1 === user.updatedAt*1);
-console.log(user.passwordChangedAt===null);
+// console.log(user.createdAt*1 === user.updatedAt*1);
+// console.log(user.passwordChangedAt===null);
 if((user.createdAt*1===user.updatedAt*1)||(user.passwordChangedAt===null))return next(new AppError("please Update password before logging in",400))
 next()
 });
@@ -97,8 +97,8 @@ const employeeLimit:number=req.user.employee_limit
 //find in database the number of assoiated created user
 const getEmployee=await Users.findAll({where:{supervised_by:req.user.id}})
 
-console.log(getEmployee,employeeLimit);
-console.log(getEmployee.length===employeeLimit);
+// console.log(getEmployee,employeeLimit);
+// console.log(getEmployee.length===employeeLimit);
 if(getEmployee.length<=employeeLimit)return next(new AppError("You have reached your employee limit",400))
 next()
 
