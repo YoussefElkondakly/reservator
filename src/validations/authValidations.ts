@@ -47,3 +47,15 @@ export const validateUpdatePassword = catchAsync(async (req, res, next) => {
   req.body = value;
   next();
 });
+const resetPasswordSchema = Joi.object({
+  password: Joi.string().min(8).required(),
+  passwordConfirm: Joi.ref("password"),
+});
+export const validateResetPassword = catchAsync(async (req, res, next) => {
+   if (!req.body.passwordConfirm) {
+     return next(new AppError("You need to Confirm password", 403));
+   }
+   const value = await resetPasswordSchema.validateAsync(req.body);
+   req.body = value;
+   next();
+})

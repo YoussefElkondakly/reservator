@@ -2,6 +2,7 @@ import {
   AllowNull,
   BelongsTo,
   Column,
+  DataType,
   ForeignKey,
   HasMany,
   Model,
@@ -33,13 +34,14 @@ export default class Users extends Model {
   address!: string;
   @Column
   passwordChangedAt!: Date;
-  @Column
-  passwordResetToken!: string;
-  @Column
-  passwordResetExpires!: Date;
+
+  @Column({ type: DataType.STRING, allowNull: true })
+  passwordResetToken!: string | null;
+  @Column({ type: DataType.DATE, allowNull: true })
+  passwordResetExpires!: Date | null;
   //
   @Column
-  employee_limit!:number
+  employee_limit!: number;
   @HasMany(() => Patients)
   patients!: Patients[];
 
@@ -63,11 +65,11 @@ export default class Users extends Model {
   @HasMany(() => Users, "supervised_by")
   users!: Users[];
   @HasMany(() => Availabilities)
-  availabilities!:Availabilities[];
+  availabilities!: Availabilities[];
 
-  @HasMany(()=>VisitHistories)
-  visitHistories!:VisitHistories[];
+  @HasMany(() => VisitHistories)
+  visitHistories!: VisitHistories[];
 
-  @HasMany(()=>Payments)
-  payments!:Payments[];
+  @HasMany(() => Payments)
+  payments!: Payments[];
 }
