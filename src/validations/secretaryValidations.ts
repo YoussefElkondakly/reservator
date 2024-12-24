@@ -79,3 +79,15 @@ export const validateMakeReservation=catchAsync(async (req,res,next)=>{
   req.body=value
   next()
 });
+const makePaymentSchema = Joi.object({
+  
+  payment_amount:Joi.number().required()
+});
+export const validateMakePayment=catchAsync(async (req,res,next)=>{
+  if (Object.values(req.body)[0] === undefined)
+    return next(new AppError("there is nothing to add", 400));
+  const value = await makePaymentSchema.validateAsync(req.body);
+  
+  req.body=value
+  next()
+  })

@@ -8,6 +8,7 @@ import Reservations from "../model/reservationsModel";
 import AppError from "../util/appError";
 import catchAsync from "../util/catchAsync";
 import { compareTime } from "../util/compareTime";
+import Payments from "../model/paymentsModel";
 const days = [
   "Sunday",
   "Monday",
@@ -83,3 +84,18 @@ export const updatePatient=catchAsync(async(req,res,next)=>{
   if (!patient) return next(new AppError("Patient not found", 404));
   res.status(200).json({ status: "success", data: patient });
 })
+export const makePayment = catchAsync(async (req, res, next) => {
+  const reservation_id = req.params.reservationId;
+  const reservation=await Reservations.findByPk(reservation_id)
+  if(!reservation)return next(new AppError("There is no reservation with specified Id",400))
+  req.body.doctor_id=req.user.supervised_by
+  req.body.payment_date=new Date();
+  const payment =await reservation.createPayments(req.body)
+  if (!payment) return next(new AppError("Payment not made", 404));
+  res.status(201).json({ status: "Payment made", data: payment });
+});
+export const payments = catchAsync(async (req, res, next) => {
+  const payments=await Payments.findAll({where:{doctor_id:req.user.supervised_by}})
+  if(payments.length===0)return next(new AppError("There is now payments made untill now",400))
+    res.status(200).json({ status: "success", data: payments });
+});

@@ -1,5 +1,7 @@
-import { BelongsTo, Column, ForeignKey, Model, Table } from "sequelize-typescript";
+import { BelongsTo, Column, ForeignKey, HasMany, HasOne, Model, Table } from "sequelize-typescript";
 import Patients from "./patientsModel";
+import Payments from "./paymentsModel";
+import { HasOneCreateAssociationMixin } from "sequelize";
 @Table
 export default class Reservations extends Model {
   @Column
@@ -11,14 +13,19 @@ export default class Reservations extends Model {
   @Column
   duration!: number;
   @Column
-  completed!:boolean;
+  completed!: boolean;
 
   @ForeignKey(() => Patients)
   @Column
   patient_id!: number;
 
-  @BelongsTo(() => Patients)/** */
-  patients!: Patients;
+  @BelongsTo(() => Patients) /** */ patients!: Patients;
+
+  @HasOne(() => Payments)
+  payments!: Payments;
+
+    createPayments!: HasOneCreateAssociationMixin<Payments>;
+  
 }
 /*
   include: [

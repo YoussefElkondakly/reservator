@@ -11,7 +11,6 @@ import {
 import Patients from "./patientsModel";
 import Availabilities from "./availabilitiesModel";
 import VisitHistories from "./visitHistoriesModel";
-import Payments from "./paymentsModel";
 @Table
 export default class Users extends Model {
   @AllowNull(false)
@@ -70,6 +69,5 @@ export default class Users extends Model {
   @HasMany(() => VisitHistories)
   visitHistories!: VisitHistories[];
 
-  @HasMany(() => Payments)
-  payments!: Payments[];
+  
 }
